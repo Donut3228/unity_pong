@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
     private Vector2 dir;
 
     private bool hitWall = false;
+    private bool keyPressed = false;
 
     void Start () {
         speed = 0.03f;
@@ -19,15 +20,25 @@ public class PlayerController : MonoBehaviour {
             dir = Vector2.zero;
             hitWall = false;
         }
+
+        if (keyPressed == true) {
+            keyPressed = false;
+        } else {
+            dir = Vector2.zero;
+        }
         transform.Translate (dir * 0.0375f);
         Invoke ("Move", speed);
     }
 
     void Update () {
-        if (Input.GetKey (KeyCode.DownArrow))
+        if (Input.GetKey (KeyCode.DownArrow)) {
             dir = -Vector2.up;
-        else if (Input.GetKey (KeyCode.UpArrow))
+            keyPressed = true;
+
+        } else if (Input.GetKey (KeyCode.UpArrow)) {
             dir = Vector2.up;
+            keyPressed = true;
+        }
     }
 
     void OnTriggerEnter2D (Collider2D other) {
